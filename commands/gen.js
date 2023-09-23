@@ -29,11 +29,16 @@ const command = new Command('gen')
     for (file of files) {
       const filename = file.slice(0, -4);
       // 如果已经处理过，可以跳过处理
-      if (newShine.imageLabels[filename]) return;
+      if (newShine.imageLabels[filename]) continue;
 
       const labels = await parseFile(filename, originPath, outputPath);
       newShine.imageLabels[filename] = labels;
       handledFiles.push(filename);
+    }
+
+    if (!handledFiles.length) {
+      console.log(`没有新的图片，无需处理。\n`);
+      return;
     }
 
     console.log(`\n已处理的图片列表：${handledFiles}`);
