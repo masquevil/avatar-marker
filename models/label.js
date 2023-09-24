@@ -48,6 +48,8 @@ function getLabelsByMetaData(metaData) {
   // 年龄
   if (REGS.old.test(metaData)) {
     labels.push('old');
+  } else {
+    labels.push('young');
   }
 
   // reset regexp

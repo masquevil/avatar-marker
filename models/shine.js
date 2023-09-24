@@ -3,7 +3,7 @@ const path = require('path');
 const exifr = require('exifr');
 const sharp = require('sharp');
 
-const { getLabelsByMetaData } = require('../models/label');
+const { getLabelsByMetaData } = require('./label');
 
 const PATHS = require('../constants/paths');
 

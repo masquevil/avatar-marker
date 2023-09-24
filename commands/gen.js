@@ -11,8 +11,10 @@ const PATHS = require('../constants/paths');
 const command = new Command('gen')
   .description('生成结果')
   .option('-d, --demo', '检查 demo 序列')
+  .option('-f, --force', '强制重跑')
   .action(async (options) => {
     const isDemo = options.demo || false;
+    const isForce = options.force || false;
 
     const oldShine = getOldShine(isDemo);
     const newShine = createShine();
@@ -26,10 +28,12 @@ const command = new Command('gen')
 
     const handledFiles = [];
 
+    console.log(`\n正在检查 ${originPath} 目录下 ${files.length} 张图片`);
+
     for (file of files) {
       const filename = file.slice(0, -4);
       // 如果已经处理过，可以跳过处理
-      if (newShine.imageLabels[filename]) continue;
+      if (!isForce && newShine.imageLabels[filename]) continue;
 
       const labels = await parseFile(filename, originPath, outputPath);
       newShine.imageLabels[filename] = labels;
